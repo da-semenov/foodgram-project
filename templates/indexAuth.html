@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'pages/index.css' %}"> {% endblock %} {% block content %} {% load user_filters %}
+<main class="main container">
+    <div class="main__header">
+        <h1 class="main__title">Рецепты</h1>
+        <ul class="tags">
+
+            {% include "includes/tags.html" with tags=tags %}
+
+        </ul>
+    </div>
+    <div class="card-list">
+        {% for post in page %}
+
+        <div class="card" data-id={{ post.id }}>
+            {% load thumbnail %} {% thumbnail post.image "500x500" crop="center" upscale=True as im %}
+
+            <a href="{% url 'recipe' post.author.username post.id %}" class="link"><img src="{{ im.url }}" alt="{{ im.name }}" class="card__image"></a>
+            {% endthumbnail %}
+
+            <div class="card__body">
+                <a class="card__title link" href="{% url 'recipe' post.author.username post.id %}">{{ post.name }}</a>
+                <ul class="card__items">
+                    {% for tag in post.tags.all %}
+
+                    <li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag }}</span></li>
+
+                    {% endfor %}
+                </ul>
+                <div class="card__items card__items_column">
+
+                    <p class="card__text"><span class="icon-time"></span> {{ post.time }} мин.</p>
+
+                    <p class="card__text"><span class="icon-user"></span> <a href="{% url 'profile' post.author.username %}" style="color: black">{{ post.author}}</a></p>
+                </div>
+            </div>
+            <div class="card__footer">
+                {% if user.is_authenticated %}
+                {% distinct post.purchase.all as items %} {% if not items %}
+                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить покупки</button>
+                {% else %}
+                <button class="button button_style_light-blue" name="purchases"><span class="icon-plus button__icon"></span>Убрать из покупок</button>
+                {% endif %}
+                {% endif %}
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if page.has_other_pages %} {% include "includes/paginator.html" with items=page paginator=paginator %} {% endif %}
+</main>
+{% endblock %} {% block style %}
+<script src="{% static 'js/components/MainCards.js' %}"></script>
+
+<script src="{% static 'js/components/Purchases.js' %}"></script>
+<script src="{% static 'js/components/Favorites.js' %}"></script>
+
+<script src="{% static 'js/config/config.js' %}"></script>
+<script src="{% static 'js/components/CardList.js' %}"></script>
+<script src="{% static 'js/components/Header.js' %}"></script>
+
+<script src="{% static 'js/api/Api.js' %}"></script>
+<script src="{% static 'indexAuth.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'pages/single.css' %}" /> {% endblock %} {% block content %} {% load user_filters %}
+
+    <main class="main container">
+        <div class="custom-center-block">
+           <p><h3> Меня зовут Денис, я выпускник Яндекс.Практикума
+           по специальности Python-разработчик.<br> Со мной можно связаться через:</h3>
+           <p><h3>Почту: da_semenov@mail.ru</a></h3></p>
+            <p><h3>По телефону: 8-962-879-03-89</a></h3></p>
+           <p><h3><a href='https://github.com/da-semenov'>Мой профиль на Github</a></h3></p>
+        </div>
+    </main>
+
+{% endblock %}
