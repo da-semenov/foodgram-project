@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Вы вышли{% endblock %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'pages/form.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="main container">
+        <div class="single-card__info" >
+          <div class="single-card__section">
+            <h3 class="single-card__section-title"></h3>
+            <p class=" single-card__section-text">Вы вышли с аккаунта! Ждём Вас снова!) </p>
+          </div>
+        </div>
+    </main>
+{% endblock %}
