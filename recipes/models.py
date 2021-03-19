@@ -35,11 +35,13 @@ class Tag(models.Model):
 
 class Recipe(models.Model):
     """Модель для хранения рецептов"""
-    title = models.CharField(max_length=255, verbose_name='Название рецепта')
+    title = models.CharField(max_length=255, verbose_name='Название рецепта',
+                             blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='recipes',
                                verbose_name='Автор рецепта')
-    description = models.TextField(verbose_name='Описание рецепта')
+    description = models.TextField(verbose_name='Описание рецепта',
+                                   blank=True)
     pub_date = models.DateTimeField(auto_now_add=True,
                                     verbose_name='Дата публикации')
     image = models.ImageField(upload_to='recipes/', null=True, blank=True,
@@ -111,7 +113,7 @@ class Purchase(models.Model):
                                verbose_name='Рецепт')
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                              verbose_name='Пользователь',
-                             related_name='list_shop')
+                             related_name='purchases')
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

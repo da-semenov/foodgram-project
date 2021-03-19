@@ -87,7 +87,7 @@ def recipe_edit(request, recipe_id):
     form = RecipeForm(request.POST or None, files=request.FILES or None,
                       instance=recipe, initial={'author': request.user})
     tags = recipe.tags.all()
-    ingredients = Number.objects.filter(recipe=recipe).all()
+    ingredients = Number.objects.filter(recipe=recipe)
     context = {'form': form,
                'is_created': True,
                'recipe_id': recipe.id,
@@ -175,7 +175,7 @@ def purchases_download(request):
     p = canvas.Canvas(response)
     pdfmetrics.registerFont(TTFont('Marvin', 'Marvin.ttf'))
     p.setFont('Marvin', 16)
-    a = [f'•  {str.title(k)} ({v[1]}) - {v[0]} ' for k, v in ing.items()]
+    a = [f'{str.title(k)} ({v[1]}) - {v[0]}' for k, v in ing.items()]
     p.drawString(200, 800, '')
     for i, item in enumerate(a):
         p.drawString(50, 700 + i*25, str(a[i]))

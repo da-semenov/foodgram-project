@@ -18,24 +18,31 @@ class RecipeForm(forms.ModelForm):
                   'image')
 
     def clean_ingredients(self):
-        ingredient_names = self.data.getlist('nameIngredient')
-        ingredient_units = self.data.getlist('unitsIngredient')
-        ingredient_amounts = self.data.getlist('valueIngredient')
+        ingredients = list(
+            zip(
+                self.data.getlist('nameIngredient'),
+                self.data.getlist('unitsIngredient'),
+                self.data.getlist('valueIngredient'),
+            ),
+        )
+        if not ingredients:
+            raise forms.ValidationError('Добавьте ингредиент')
+
         ingredients_clean = []
-        for ingredient in zip(ingredient_names, ingredient_units,
-                              ingredient_amounts):
-            if int(ingredient[2]) < 0:
-                raise forms.ValidationError('Количество ингредиентов должно '
-                                            'быть больше нуля')
-            elif not Ingredient.objects.filter(title=ingredient[0]).exists():
+        for title, unit, amount in ingredients:
+            if int(amount) < 0:
+                raise forms.ValidationError(
+                    'Количество ингредиентов должно быть больше нуля'
+                )
+            elif not Ingredient.objects.filter(title=title).exists():
                 raise forms.ValidationError(
                     'Ингредиенты должны быть из списка')
             else:
-                ingredients_clean.append({'title': ingredient[0],
-                                          'unit': ingredient[1],
-                                          'amount': ingredient[2]})
-        if not ingredients_clean:
-            raise forms.ValidationError('Добавьте ингредиент')
+                ingredients_clean.append({
+                    'title': title,
+                    'unit': unit,
+                    'amount': amount,
+                })
         return ingredients_clean
 
     def clean_title(self):

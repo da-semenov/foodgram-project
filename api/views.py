@@ -8,7 +8,12 @@ from api.serializers import (FavoriteSerializer, FollowSerializer,
 from recipes.models import Favorite, Follow, Purchase, User
 
 
-class Mix(generics.CreateAPIView, generics.DestroyAPIView):
+class CreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
+    """
+    Класс родитель с переопределенным методом DELETE
+    для Favorite, Follow и Purchase
+    """
+
     api_name = ''
 
     def delete(self, request, *args, **kwargs):
@@ -18,27 +23,27 @@ class Mix(generics.CreateAPIView, generics.DestroyAPIView):
         elif self.api_name == 'follow':
             obj = user.follower.filter(author__id=kwargs['id'])
         else:
-            obj = user.list_shop.filter(recipe__id=kwargs['id'])
+            obj = user.purchases.filter(recipe__id=kwargs['id'])
         if obj.delete():
             return Response({'Success': True})
         return Response({'Success': False})
 
 
-class FavoritesView(Mix):
+class FavoritesView(CreateDestroyView):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
     permission_classes = [IsAuthenticated]
     api_name = 'favorite'
 
 
-class FollowView(Mix):
+class FollowView(CreateDestroyView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = [IsAuthenticated]
     api_name = 'follow'
 
 
-class PurchaseView(Mix):
+class PurchaseView(CreateDestroyView):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
     permission_classes = [IsAuthenticated]
