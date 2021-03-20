@@ -21,7 +21,7 @@ class CreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
         if self.api_name == 'favorite':
             obj = user.favorites.filter(recipe__id=kwargs['id'])
         elif self.api_name == 'follow':
-            obj = user.follower.filter(author__id=kwargs['id'])
+            obj = user.followers.filter(author__id=kwargs['id'])
         else:
             obj = user.purchases.filter(recipe__id=kwargs['id'])
         if obj.delete():

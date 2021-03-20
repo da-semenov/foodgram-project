@@ -56,7 +56,7 @@ class Recipe(models.Model):
                                          related_name='favorite_recipes',
                                          blank=True)
     purchase_by = models.ManyToManyField(User, through='Purchase',
-                                         related_name='shop_list',
+                                         related_name='listed_recipes',
                                          blank=True)
 
     class Meta:
@@ -130,10 +130,10 @@ class Purchase(models.Model):
 class Follow(models.Model):
     """Модель подписок"""
     user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             related_name='follower',
+                             related_name='followers',
                              verbose_name='Подписчик')
     author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               related_name='following',
+                               related_name='followings',
                                verbose_name='Автор')
     created = models.DateTimeField(auto_now_add=True)
 

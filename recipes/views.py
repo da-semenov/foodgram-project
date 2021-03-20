@@ -137,7 +137,7 @@ def favorites(request):
 
 @login_required
 def follow(request):
-    follow = request.user.follower.all()
+    follow = request.user.followers.all()
     paginator = Paginator(follow, ITEMS_FOR_PAGINATOR)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -149,7 +149,7 @@ def follow(request):
 @login_required
 def purchases(request):
     user = request.user
-    recipes = user.shop_list.all()
+    recipes = user.listed_recipes.all()
     return render(request, 'shopList.html', {'page': recipes})
 
 
