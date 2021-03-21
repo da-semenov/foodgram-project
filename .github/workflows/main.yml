@@ -70,7 +70,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            sudo docker pull da-semenov/foodgram-project
+            sudo docker pull da-semenov/foodgram-project:latest
                         cd /home/${{ secrets.USER }}/app
                         docker-compose stop
                         docker rm web
