@@ -57,7 +57,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo docker pull dasemenov/foodgram-project:latest
-            cd /home/${{ secrets.USER }}/app
+            cd /home/www/foodgram-project/
             docker-compose stop
             docker-compose rm web
             docker-compose up -d
