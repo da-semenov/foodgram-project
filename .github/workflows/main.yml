@@ -70,11 +70,11 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            sudo docker pull da-semenov/foodgram-project:latest
-                        cd /home/${{ secrets.USER }}/app
-                        docker-compose stop
-                        docker rm web
-                        docker-compose up -d
+            sudo docker pull dasemenov/foodgram-project:latest
+            cd /home/${{ secrets.USER }}/app
+            sudo docker-compose stop
+            sudo docker-compose rm web
+            sudo docker-compose up -d
 
   send_message:
     name: Send message to Telegram
