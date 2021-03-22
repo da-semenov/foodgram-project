@@ -1,4 +1,4 @@
-
+![foodgram](https://github.com/da-semenov/foodgram-project/workflows/main/badge.svg?branch=master)
 
 [![Python](https://img.shields.io/badge/-Python-464646??style=flat-square&logo=Python)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/-Django-464646??style=flat-square&logo=Django)](https://www.djangoproject.com/)
@@ -12,7 +12,28 @@
 Приложение «Продуктовый помощник»: сайт, на котором пользователи будут публиковать
 рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов.
 Сервис «Список покупок» позволит пользователям создавать список продуктов, 
-которые нужно купить для приготовления выбранных блюд.
+которые нужно купить для приготовления выбранных блюд и скачать его в формате pdf.
+
+### Адрес сайта
+http://178.154.193.199
+
+---
+Для проекта настроен Continuous Integration и Continuous Deployment:
+автоматический запуск тестов, обновление образов на Docker Hub и автоматический деплой
+на боевой сервер при пуше в ветку main.
+
+---
+
+## Технические требования и инфраструктура </h3>
+
+- Проект использует базу данных PostgreSQL.
+- Проект запускается в трёх контейнерах (Nginx, PostgreSQL и Django)
+
+## Необходимое ПО
+
+Docker: https://www.docker.com/get-started <br />
+Docker-compose: https://docs.docker.com/compose/install/
+
 
 ## Установка
 
@@ -21,8 +42,8 @@
 git clone https://github.com/da-semenov/foodgram-project
 ```
 
-#### 2. В корневой папке проекта на сервере необходимо создать файл .env с данными для подключения к базе данных ```postgresql```.
-В репозитории есть образец .env.example.
+#### 2. В корневой папке проекта на сервере необходимо создать файл ```.env``` с данными для подключения к базе данных ```postgresql```.
+В репозитории есть образец .env.example
 
 
 #### 3. Добавьте Action secrets в репозитории на GitHub в разделе settings -> Secrets:
@@ -46,9 +67,9 @@ $ ssh username@server_address
 $ sudo docker container ls
 ```
 
-#### 6. Зайти в контейнер yamdb по id контейнера
+#### 6. Зайти в контейнер foodgram-project по id контейнера
 ```bash
-$ sudo docker exec -it 1223456789012 bash
+$ sudo docker exec -it 123456789012 bash
 ```
 
 #### 7. Выполнить миграции внутри этого контейнера
@@ -64,6 +85,16 @@ python manage.py collectstatic
 #### 9. Создайте суперпользователя для работы с админкой ```Django```
 ```bash
 python manage.py createsuperuser
+```
+
+#### 10. Выгрузите данные из файла csv с ингредиентами
+```bash
+python manage.py import_csv
+```
+
+#### 11. При желании можно загрузить тестовую базу
+```bash
+python manage.py loaddata dump.json
 ```
 
 
