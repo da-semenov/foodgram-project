@@ -1,4 +1,4 @@
-![foodgram-project](https://github.com/da-semenov/foodgram-project/workflows/main/badge.svg)
+![foodgram-project](https://github.com/da-semenov/foodgram-project/workflows/main.yml/badge.svg?branch=master)
 
 [![Python](https://img.shields.io/badge/-Python-464646??style=flat-square&logo=Python)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/-Django-464646??style=flat-square&logo=Django)](https://www.djangoproject.com/)
