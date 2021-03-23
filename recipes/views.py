@@ -137,8 +137,11 @@ def favorites(request):
 
 @login_required
 def follow(request):
-    follow = request.user.followers.all()
-    paginator = Paginator(follow, ITEMS_FOR_PAGINATOR)
+    user = get_object_or_404(User, username=request.user)
+    cards = user.followers.prefetch_related("author__recipes").order_by(
+        "author__first_name"
+    )
+    paginator = Paginator(cards, ITEMS_FOR_PAGINATOR)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(request, 'myFollow.html', {'follow': follow,

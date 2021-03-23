@@ -79,9 +79,6 @@ class Number(models.Model):
     amount = models.IntegerField(validators=[MinValueValidator(1)])
 
     class Meta:
-        constraints = [models.UniqueConstraint(
-            fields=['ingredient', 'amount', 'recipe'],
-            name='ingredient_unique')]
         verbose_name = 'Кол-во ингредиента в рецепте'
         verbose_name_plural = 'Кол-во ингредиентов в рецепте'
 
