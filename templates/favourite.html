@@ -16,7 +16,9 @@
                 {% include 'recipe_cards.html' with card=card favorites=page %}
             {% endfor %}
         </div>
-        {% include 'includes/paginator.html' with page=object_list paginator=paginator %}
+        {% if page.has_other_pages %}
+        {% include 'includes/paginator.html' with page=page paginator=paginator %}
+        {% endif %}
 {% endblock %}
 
 {% block javascript %}
