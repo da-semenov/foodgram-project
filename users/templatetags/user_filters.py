@@ -52,3 +52,15 @@ def renew_tag_link(request, tag):
 @register.filter
 def tags_template(tags):
     return tags.values_list('slug', flat=True)
+
+
+@register.filter
+def conjoin(number, args):
+    args = [arg.strip() for arg in args.split(',')]
+    last_digit = int(number) % 10
+    if last_digit == 1:
+        return f'{number} {args[0]}'
+    elif 1 < last_digit < 5:
+        return f'{number} {args[1]}'
+    elif last_digit > 4 or last_digit == 0:
+        return f'{number} {args[2]}'
